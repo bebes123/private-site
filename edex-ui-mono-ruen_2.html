@@ -1,0 +1,754 @@
+<div id="edexm-root">
+  <button id="edexm-fullscreen-btn" title="Enter fullscreen">⛶ FULLSCREEN</button>
+  <div class="edexm-boot" id="edexm-boot"><div class="edexm-boot-text" id="edexm-boot-text"></div></div>
+
+  <div class="edexm-shell" id="edexm-shell">
+    <div class="edexm-toprow">
+      <span class="edexm-toplabel" data-i18n="panelSystem">PANEL / SYSTEM</span>
+      <span class="edexm-toplabel edexm-topright" data-i18n="panelNetwork">PANEL / NETWORK</span>
+    </div>
+
+    <div class="edexm-main">
+      <div class="edexm-col edexm-sys">
+        <div class="edexm-clock" id="edexm-clock">00:00:00</div>
+        <div class="edexm-dategrid">
+          <div><span id="edexm-date">JAN 01</span><b data-i18n="date">DATE</b></div>
+          <div><span id="edexm-uptime">0d00:00</span><b data-i18n="uptime">UPTIME</b></div>
+          <div><span>WIN</span><b data-i18n="type">TYPE</b></div>
+          <div><span class="edexm-on">ON</span><b data-i18n="power">POWER</b></div>
+        </div>
+        <div class="edexm-row2">
+          <span data-i18n="manufacturer">MANUFACTURER</span>
+          <span data-i18n="model">MODEL</span>
+          <span data-i18n="chassis">CHASSIS</span>
+        </div>
+
+        <div class="edexm-section-title"><span data-i18n="cpuUsage">CPU USAGE</span></div>
+        <div class="edexm-cpu-block">
+          <div class="edexm-cpu-label">#1 - 4<i id="cpu1-avg">28%</i></div>
+          <canvas class="edexm-graph" id="cpu1" width="220" height="34"></canvas>
+        </div>
+        <div class="edexm-cpu-block">
+          <div class="edexm-cpu-label">#5 - 8<i id="cpu2-avg">22%</i></div>
+          <canvas class="edexm-graph" id="cpu2" width="220" height="34"></canvas>
+        </div>
+
+        <div class="edexm-section-title">
+          <span data-i18n="cores">CORES</span> <b id="edexm-cores">8</b>
+          <span data-i18n="spd">SPD</span> <b id="edexm-spd">3.6GHz</b>
+          <span data-i18n="max">MAX</span> <b id="edexm-max">4.4GHz</b>
+          <span data-i18n="tasks">TASKS</span> <b id="edexm-tasks">312</b>
+        </div>
+
+        <div class="edexm-section-title"><span data-i18n="memory">MEMORY</span> <b id="edexm-memlabel">USING 7.4 / 15.8 GIB</b></div>
+        <div class="edexm-memgrid" id="edexm-memgrid"></div>
+        <div class="edexm-swap"><span data-i18n="swap">SWAP</span><div class="edexm-swapbar"><div id="edexm-swapfill"></div></div><span id="edexm-swapval">0 GiB</span></div>
+
+        <div class="edexm-section-title">
+          <span data-i18n="topProcesses">TOP PROCESSES</span>
+          <b data-i18n="name">NAME</b><b data-i18n="cpu">CPU</b><b data-i18n="mem">MEM</b>
+        </div>
+        <div id="edexm-proclist" class="edexm-proclist"></div>
+      </div>
+
+      <div class="edexm-col edexm-term">
+        <div class="edexm-tabs">
+          <div class="edexm-tab edexm-tab-active" data-i18n="mainShell">MAIN SHELL</div>
+          <div class="edexm-tab" data-i18n="empty">EMPTY</div>
+          <div class="edexm-tab" data-i18n="empty">EMPTY</div>
+          <div class="edexm-tab" data-i18n="empty">EMPTY</div>
+          <div class="edexm-tab" data-i18n="empty">EMPTY</div>
+        </div>
+        <div class="edexm-termbody" id="edexm-termbody"></div>
+      </div>
+
+      <div class="edexm-col edexm-net">
+        <div class="edexm-nettitle"><span data-i18n="networkStatus">NETWORK STATUS</span> <i id="edexm-ifname">wlan0-Interface 1</i></div>
+        <div class="edexm-netgrid">
+          <div><span id="edexm-state">OFFLINE</span><b data-i18n="state">STATE</b></div>
+          <div><span id="edexm-ipv4">--.--.--.--</span><b>IPv4</b></div>
+          <div><span id="edexm-ping">--ms</span><b data-i18n="ping">PING</b></div>
+        </div>
+        <div class="edexm-worldtitle"><span data-i18n="worldView">WORLD VIEW</span> <i data-i18n="globalMap">GLOBAL NETWORK MAP</i></div>
+        <div class="edexm-globe-wrap">
+          <canvas id="edexm-globe" width="220" height="150"></canvas>
+        </div>
+        <div class="edexm-endpoint"><span data-i18n="endpoint">ENDPOINT LAT/LON</span> <span id="edexm-latlon">--.-- / --.--</span></div>
+
+        <div class="edexm-nettitle"><span data-i18n="networkTraffic">NETWORK TRAFFIC</span> <i data-i18n="upDown">UP / DOWN, MB/S</i></div>
+        <div class="edexm-traffic-row"><span data-i18n="total">TOTAL</span><span id="edexm-total">0 OUT, 0 IN</span></div>
+        <canvas class="edexm-graph" id="edexm-trafgraph" width="220" height="40"></canvas>
+      </div>
+    </div>
+
+    <div class="edexm-bottom">
+      <div class="edexm-fs">
+        <div class="edexm-fs-header"><span data-i18n="fileSystem">FILE SYSTEM</span> <i id="edexm-fs-path">C:\Users\Guest\AppData\Roaming\eDEX-UI</i></div>
+        <div class="edexm-fs-grid" id="edexm-fs-grid"></div>
+        <div class="edexm-fs-status" data-i18n="calcSpace">Calculating available space...</div>
+      </div>
+      <div class="edexm-kb" id="edexm-kb"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  overflow: hidden;
+}
+
+#edexm-root {
+  --bg: #000000;
+  --panel-line: #333333;
+  --fg: #e6e6e6;
+  --dim: #6e6e6e;
+  --bright: #ffffff;
+  --amber: #ffb454;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  max-height: none;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Share Tech Mono', monospace;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 11px;
+}
+
+#edexm-fullscreen-btn {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  z-index: 40;
+  background: rgba(0,0,0,0.6);
+  color: var(--fg, #e6e6e6);
+  border: 1px solid var(--panel-line, #333);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+#edexm-fullscreen-btn:hover { background: rgba(255,255,255,0.15); }
+#edexm-fullscreen-btn.edexm-hidden { display: none; }
+
+.edexm-boot {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: #000;
+  color: #cfcfcf;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  padding: 16px;
+  overflow: hidden;
+  animation: edexm-boot-out 0.6s ease-in 3.0s forwards;
+}
+.edexm-boot-text { white-space: pre-wrap; line-height: 1.5; }
+@keyframes edexm-boot-out {
+  to { opacity: 0; transform: translateY(-30px); pointer-events: none; }
+}
+
+.edexm-shell {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  animation: edexm-shell-in 0.6s ease-out 3.1s forwards;
+}
+@keyframes edexm-shell-in { to { opacity: 1; } }
+
+.edexm-toprow {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 14px;
+  font-size: 9px;
+  color: var(--dim);
+  letter-spacing: 2px;
+  border-bottom: 1px solid var(--panel-line);
+}
+
+.edexm-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 240px 1fr 240px;
+  gap: 12px;
+  padding: 10px 14px;
+  min-height: 0;
+}
+
+.edexm-col { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+
+.edexm-clock {
+  font-family: 'VT323', monospace;
+  font-size: 40px;
+  color: var(--bright);
+  line-height: 1;
+}
+.edexm-dategrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 10px 0;
+}
+.edexm-dategrid div { display: flex; flex-direction: column; }
+.edexm-dategrid span { font-size: 12px; color: var(--bright); }
+.edexm-dategrid b { font-weight: 400; font-size: 8px; color: var(--dim); letter-spacing: 1px; }
+.edexm-on { color: var(--fg) !important; }
+
+.edexm-row2 {
+  display: flex;
+  justify-content: space-between;
+  font-size: 8px;
+  color: var(--dim);
+  border-top: 1px solid var(--panel-line);
+  border-bottom: 1px solid var(--panel-line);
+  padding: 4px 0;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.edexm-section-title {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--dim);
+  margin: 6px 0 4px;
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+}
+.edexm-section-title b { font-weight: 400; color: var(--fg); }
+
+.edexm-cpu-block { margin-bottom: 4px; }
+.edexm-cpu-label { display: flex; justify-content: space-between; font-size: 9px; color: var(--dim); }
+.edexm-cpu-label i { font-style: normal; color: var(--bright); }
+.edexm-graph { width: 100%; height: 34px; display: block; border-bottom: 1px solid var(--panel-line); }
+
+.edexm-memgrid {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  gap: 1.5px;
+  margin: 4px 0;
+}
+.edexm-memgrid div { aspect-ratio: 1; background: var(--panel-line); }
+.edexm-memgrid div.lit { background: var(--fg); }
+
+.edexm-swap { display: flex; align-items: center; gap: 6px; font-size: 9px; color: var(--dim); margin: 4px 0 8px; }
+.edexm-swapbar { flex: 1; height: 5px; background: var(--panel-line); }
+#edexm-swapfill { height: 100%; width: 0%; background: var(--fg); }
+
+.edexm-proclist { flex: 1; overflow: hidden; font-size: 9px; }
+.edexm-proclist div { display: flex; justify-content: space-between; padding: 1.5px 0; color: var(--dim); }
+.edexm-proclist div span:first-child { color: var(--fg); }
+
+.edexm-tabs { display: flex; border-bottom: 1px solid var(--panel-line); }
+.edexm-tab {
+  padding: 6px 14px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--dim);
+  border-right: 1px solid var(--panel-line);
+}
+.edexm-tab-active { color: var(--bright); background: rgba(255,255,255,0.06); }
+.edexm-termbody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 4px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--bright);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.edexm-cursor-blink { animation: edexm-blink 1s steps(1) infinite; }
+@keyframes edexm-blink { 0%,49%{opacity:1;} 50%,100%{opacity:0;} }
+
+.edexm-nettitle { font-size: 9px; letter-spacing: 1px; color: var(--dim); margin: 4px 0; }
+.edexm-nettitle i { font-style: normal; float: right; color: var(--dim); }
+.edexm-netgrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 4px; margin-bottom: 8px; }
+.edexm-netgrid div { display: flex; flex-direction: column; }
+.edexm-netgrid span { font-size: 11px; color: var(--bright); }
+.edexm-netgrid b { font-weight: 400; font-size: 8px; color: var(--dim); }
+
+.edexm-worldtitle { font-size: 9px; letter-spacing: 1px; color: var(--dim); margin: 4px 0; }
+.edexm-worldtitle i { font-style: normal; float: right; }
+.edexm-globe-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+.edexm-endpoint { font-size: 8px; color: var(--dim); margin: 6px 0 4px; letter-spacing: 1px; }
+.edexm-traffic-row { display: flex; justify-content: space-between; font-size: 9px; color: var(--dim); margin-bottom: 2px; }
+
+.edexm-bottom {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 12px;
+  padding: 0 14px 12px;
+  height: 190px;
+}
+.edexm-fs { border-top: 1px solid var(--panel-line); padding-top: 6px; overflow: hidden; display: flex; flex-direction: column; }
+.edexm-fs-header { font-size: 9px; letter-spacing: 1px; color: var(--dim); margin-bottom: 6px; }
+.edexm-fs-header i { font-style: normal; float: right; color: var(--dim); }
+.edexm-fs-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 6px;
+  overflow: hidden;
+}
+.edexm-fs-item { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 8px; color: var(--dim); text-align: center; cursor: default; }
+.edexm-fs-icon { width: 26px; height: 22px; border: 1px solid var(--dim); border-top: 6px solid var(--dim); border-radius: 1px; opacity: 0.85; }
+.edexm-fs-status { font-size: 8px; color: var(--dim); margin-top: 4px; }
+
+.edexm-fs-item.edexm-lang-toggle { cursor: pointer; }
+.edexm-fs-item.edexm-lang-toggle .edexm-fs-icon {
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--fg);
+  color: var(--fg);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.edexm-fs-item.edexm-lang-toggle:hover .edexm-fs-icon,
+.edexm-fs-item.edexm-lang-toggle:hover span {
+  color: #000;
+  background: var(--fg);
+}
+.edexm-fs-item.edexm-lang-toggle span { color: var(--fg); }
+
+.edexm-kb { border-top: 1px solid var(--panel-line); padding-top: 6px; display: flex; flex-direction: column; gap: 3px; }
+.edexm-kb-row { display: flex; gap: 3px; flex: 1; }
+.edexm-key {
+  flex: 1;
+  border: 1px solid var(--panel-line);
+  color: var(--dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  border-radius: 2px;
+  transition: background 0.05s, color 0.05s;
+}
+.edexm-key.wide2 { flex: 2; }
+.edexm-key.active { background: var(--fg); color: #000; }
+
+@media (max-width: 900px) {
+  .edexm-main { grid-template-columns: 1fr; }
+  .edexm-bottom { grid-template-columns: 1fr; height: auto; }
+  .edexm-net, .edexm-sys { display: none; }
+}
+</style>
+
+<script>
+(function() {
+  const root = document.getElementById('edexm-root');
+  let lang = 'en';
+
+  const fsBtn = document.getElementById('edexm-fullscreen-btn');
+  function updateFsBtn() {
+    const isFs = !!document.fullscreenElement;
+    fsBtn.classList.toggle('edexm-hidden', isFs);
+  }
+  fsBtn.addEventListener('click', () => {
+    const el = document.documentElement;
+    const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+    if (!req) {
+      alert('Fullscreen is not supported in this view. Open this HTML file directly in a browser tab (not inside an embedded preview) and try again.');
+      return;
+    }
+    req.call(el).then(() => {
+      root.focus();
+    }).catch(() => {
+      alert('Fullscreen was blocked. This usually happens inside an embedded preview/iframe. Open this HTML file directly in its own browser tab and click the button again.');
+    });
+  });
+  document.addEventListener('fullscreenchange', updateFsBtn);
+  document.addEventListener('webkitfullscreenchange', updateFsBtn);
+
+  const dict = {
+    panelSystem: { en: 'PANEL / SYSTEM', ru: 'ПАНЕЛЬ / СИСТЕМА' },
+    panelNetwork: { en: 'PANEL / NETWORK', ru: 'ПАНЕЛЬ / СЕТЬ' },
+    date: { en: 'DATE', ru: 'ДАТА' },
+    uptime: { en: 'UPTIME', ru: 'РАБОТА' },
+    type: { en: 'TYPE', ru: 'ТИП' },
+    power: { en: 'POWER', ru: 'ПИТАНИЕ' },
+    manufacturer: { en: 'MANUFACTURER', ru: 'ПРОИЗВОДИТЕЛЬ' },
+    model: { en: 'MODEL', ru: 'МОДЕЛЬ' },
+    chassis: { en: 'CHASSIS', ru: 'КОРПУС' },
+    cpuUsage: { en: 'CPU USAGE', ru: 'ЗАГРУЗКА ЦП' },
+    cores: { en: 'CORES', ru: 'ЯДРА' },
+    spd: { en: 'SPD', ru: 'ЧАСТ' },
+    max: { en: 'MAX', ru: 'МАКС' },
+    tasks: { en: 'TASKS', ru: 'ЗАДАЧИ' },
+    memory: { en: 'MEMORY', ru: 'ПАМЯТЬ' },
+    swap: { en: 'SWAP', ru: 'ПОДКАЧКА' },
+    topProcesses: { en: 'TOP PROCESSES', ru: 'ПРОЦЕССЫ' },
+    name: { en: 'NAME', ru: 'ИМЯ' },
+    cpu: { en: 'CPU', ru: 'ЦП' },
+    mem: { en: 'MEM', ru: 'ПАМ' },
+    mainShell: { en: 'MAIN SHELL', ru: 'ГЛАВНАЯ ОБОЛОЧКА' },
+    empty: { en: 'EMPTY', ru: 'ПУСТО' },
+    networkStatus: { en: 'NETWORK STATUS', ru: 'СТАТУС СЕТИ' },
+    state: { en: 'STATE', ru: 'СОСТОЯНИЕ' },
+    ping: { en: 'PING', ru: 'ПИНГ' },
+    worldView: { en: 'WORLD VIEW', ru: 'КАРТА МИРА' },
+    globalMap: { en: 'GLOBAL NETWORK MAP', ru: 'ГЛОБАЛЬНАЯ СЕТЬ' },
+    endpoint: { en: 'ENDPOINT LAT/LON', ru: 'КООРДИНАТЫ ТОЧКИ' },
+    networkTraffic: { en: 'NETWORK TRAFFIC', ru: 'ТРАФИК СЕТИ' },
+    upDown: { en: 'UP / DOWN, MB/S', ru: 'ВВЕРХ / ВНИЗ, МБ/С' },
+    total: { en: 'TOTAL', ru: 'ВСЕГО' },
+    fileSystem: { en: 'FILE SYSTEM', ru: 'ФАЙЛОВАЯ СИСТЕМА' },
+    calcSpace: { en: 'Calculating available space...', ru: 'Вычисление свободного места...' },
+  };
+
+  function applyLang() {
+    document.querySelectorAll('#edexm-root [data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key]) el.textContent = dict[key][lang];
+    });
+    const stateEl = document.getElementById('edexm-state');
+    stateEl.textContent = lang === 'en' ? 'OFFLINE' : 'ОФЛАЙН';
+    langLabel.textContent = lang === 'en' ? 'RU' : 'EN';
+    langSub.textContent = lang === 'en' ? 'switch to russian' : 'переключить на английский';
+    renderTerm();
+    renderProcs();
+    kbEl.querySelectorAll('.edexm-key').forEach(k => {
+      const en = k.getAttribute('data-en');
+      const ru = k.getAttribute('data-ru');
+      if (en && ru) k.textContent = lang === 'en' ? en : ru;
+    });
+  }
+
+  function pad(n) { return String(n).padStart(2,'0'); }
+  const clockEl = document.getElementById('edexm-clock');
+  const dateEl = document.getElementById('edexm-date');
+  const uptimeEl = document.getElementById('edexm-uptime');
+  const startTime = Date.now();
+  const monthsEn = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  const monthsRu = ['ЯНВ','ФЕВ','МАР','АПР','МАЙ','ИЮН','ИЮЛ','АВГ','СЕН','ОКТ','НОЯ','ДЕК'];
+  function tickClock() {
+    const d = new Date();
+    clockEl.textContent = pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+    const months = lang === 'en' ? monthsEn : monthsRu;
+    dateEl.textContent = months[d.getMonth()] + ' ' + pad(d.getDate());
+    const up = Math.floor((Date.now()-startTime)/1000);
+    uptimeEl.textContent = '0d' + pad(Math.floor(up/3600)) + ':' + pad(Math.floor((up%3600)/60));
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  function drawGraph(canvas, dataRef) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    dataRef.arr.push(dataRef.val);
+    if (dataRef.arr.length > 40) dataRef.arr.shift();
+    ctx.clearRect(0,0,w,h);
+    ctx.beginPath();
+    dataRef.arr.forEach((v,i) => {
+      const x = (i/39)*w;
+      const y = h - (v/100)*h;
+      if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    });
+    ctx.strokeStyle = '#e6e6e6';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+    ctx.lineTo(w,h); ctx.lineTo(0,h); ctx.closePath();
+    ctx.fillStyle = 'rgba(255,255,255,0.06)';
+    ctx.fill();
+  }
+
+  const cpu1 = { arr: [], val: 25 };
+  const cpu2 = { arr: [], val: 20 };
+  const cpu1canvas = document.getElementById('cpu1');
+  const cpu2canvas = document.getElementById('cpu2');
+  const cpu1avg = document.getElementById('cpu1-avg');
+  const cpu2avg = document.getElementById('cpu2-avg');
+
+  setInterval(() => {
+    cpu1.val = Math.max(4, Math.min(95, cpu1.val + (Math.random()*20-10)));
+    cpu2.val = Math.max(4, Math.min(95, cpu2.val + (Math.random()*20-10)));
+    drawGraph(cpu1canvas, cpu1);
+    drawGraph(cpu2canvas, cpu2);
+    cpu1avg.textContent = Math.round(cpu1.val) + '%';
+    cpu2avg.textContent = Math.round(cpu2.val) + '%';
+  }, 500);
+
+  const memGrid = document.getElementById('edexm-memgrid');
+  const totalCells = 120;
+  for (let i=0;i<totalCells;i++) {
+    const d = document.createElement('div');
+    memGrid.appendChild(d);
+  }
+  function updateMem(pct) {
+    const lit = Math.round(totalCells * pct);
+    Array.from(memGrid.children).forEach((c,i) => {
+      c.classList.toggle('lit', i < lit);
+    });
+  }
+  let memPct = 0.47;
+  updateMem(memPct);
+  setInterval(() => {
+    memPct = Math.max(0.2, Math.min(0.85, memPct + (Math.random()*0.06-0.03)));
+    updateMem(memPct);
+    document.getElementById('edexm-memlabel').textContent =
+      (lang==='en' ? 'USING ' : '') + (memPct*15.8).toFixed(1) + ' / 15.8 GIB';
+  }, 1400);
+
+  const swapFill = document.getElementById('edexm-swapfill');
+  const swapVal = document.getElementById('edexm-swapval');
+  setInterval(() => {
+    const v = Math.random()*8;
+    swapFill.style.width = (v/16*100) + '%';
+    swapVal.textContent = v.toFixed(1) + ' GiB';
+  }, 3000);
+
+  const procNames = ['eDEX-UI.exe','powershell.exe','svchost.exe','explorer.exe','chrome.exe','dwm.exe','node.exe','System','RuntimeBroker.exe','conhost.exe'];
+  const procList = document.getElementById('edexm-proclist');
+  function renderProcs() {
+    procList.innerHTML = '';
+    const shuffled = [...procNames].sort(()=>Math.random()-0.5).slice(0,6);
+    shuffled.forEach(name => {
+      const row = document.createElement('div');
+      const cpu = (Math.random()*30).toFixed(1);
+      const mem = (Math.random()*400).toFixed(0);
+      row.innerHTML = '<span>'+name+'</span><span>'+cpu+'%</span><span>'+mem+'M</span>';
+      procList.appendChild(row);
+    });
+  }
+  renderProcs();
+  setInterval(renderProcs, 2500);
+
+  const globeCanvas = document.getElementById('edexm-globe');
+  const gctx = globeCanvas.getContext('2d');
+  let rot = 0;
+
+  const continents = [
+    [[-40,60],[-20,65],[0,55],[10,40],[-10,20],[-30,25],[-45,45]],
+    [[10,50],[30,55],[45,40],[35,10],[15,0],[5,20]],
+    [[60,40],[90,45],[110,30],[100,0],[75,-5],[65,15]],
+    [[-70,-10],[-50,-5],[-45,-35],[-65,-45],[-75,-20]],
+    [[120,-15],[140,-10],[145,-30],[125,-35]],
+  ];
+
+  function project(lon, lat, rotation, r, cx, cy) {
+    const lonR = (lon * Math.PI/180) + rotation;
+    const latR = lat * Math.PI/180;
+    const x = Math.cos(latR) * Math.sin(lonR);
+    const y = Math.sin(latR);
+    const z = Math.cos(latR) * Math.cos(lonR);
+    return { x: cx + x*r, y: cy - y*r, visible: z > -0.15, z };
+  }
+
+  function drawGlobe() {
+    const w = globeCanvas.width, h = globeCanvas.height;
+    gctx.clearRect(0,0,w,h);
+    const cx = w/2, cy = h/2, r = 58;
+
+    gctx.strokeStyle = 'rgba(255,255,255,0.9)';
+    gctx.lineWidth = 1;
+    gctx.beginPath(); gctx.arc(cx,cy,r,0,Math.PI*2); gctx.stroke();
+
+    gctx.strokeStyle = 'rgba(255,255,255,0.25)';
+    for (let lon = -180; lon < 180; lon += 30) {
+      gctx.beginPath();
+      let started = false;
+      for (let lat = -90; lat <= 90; lat += 5) {
+        const p = project(lon, lat, rot, r, cx, cy);
+        if (p.visible) {
+          if (!started) { gctx.moveTo(p.x,p.y); started = true; }
+          else gctx.lineTo(p.x,p.y);
+        } else started = false;
+      }
+      gctx.stroke();
+    }
+    for (let lat = -60; lat <= 60; lat += 30) {
+      gctx.beginPath();
+      let started = false;
+      for (let lon = -180; lon <= 180; lon += 5) {
+        const p = project(lon, lat, rot, r, cx, cy);
+        if (p.visible) {
+          if (!started) { gctx.moveTo(p.x,p.y); started = true; }
+          else gctx.lineTo(p.x,p.y);
+        } else started = false;
+      }
+      gctx.stroke();
+    }
+
+    gctx.fillStyle = 'rgba(255,255,255,0.5)';
+    continents.forEach(poly => {
+      gctx.beginPath();
+      let started = false;
+      let anyVisible = false;
+      poly.forEach(([lon,lat]) => {
+        const p = project(lon, lat, rot, r, cx, cy);
+        if (p.visible) anyVisible = true;
+        if (!started) { gctx.moveTo(p.x,p.y); started = true; }
+        else gctx.lineTo(p.x,p.y);
+      });
+      gctx.closePath();
+      if (anyVisible) gctx.fill();
+    });
+
+    rot += 0.006;
+  }
+  setInterval(drawGlobe, 50);
+  drawGlobe();
+
+  const traf = { arr: [], val: 2 };
+  const trafCanvas = document.getElementById('edexm-trafgraph');
+  const totalEl = document.getElementById('edexm-total');
+  let outB = 0, inB = 0;
+  setInterval(() => {
+    traf.val = Math.max(0, Math.min(100, traf.val + (Math.random()*16-8)));
+    drawGraph(trafCanvas, traf);
+    outB += Math.random()*0.4; inB += Math.random()*0.9;
+    totalEl.textContent = outB.toFixed(2)+' OUT, '+inB.toFixed(2)+' IN';
+  }, 500);
+
+  const fsItems = ['Show disks','Go up','blob_storage','Cache','Code Cache','Dictionaries','fonts','GPUCache','Local Storage','Session Storage','themes','Cookies','IndexedDB','Service Worker','shared_proto_db'];
+  const fsGrid = document.getElementById('edexm-fs-grid');
+  fsItems.forEach(name => {
+    const item = document.createElement('div');
+    item.className = 'edexm-fs-item';
+    item.innerHTML = '<div class="edexm-fs-icon"></div><span>'+name+'</span>';
+    fsGrid.appendChild(item);
+  });
+
+  const langItem = document.createElement('div');
+  langItem.className = 'edexm-fs-item edexm-lang-toggle';
+  langItem.title = 'Toggle interface language';
+  const langLabel = document.createElement('div');
+  langLabel.className = 'edexm-fs-icon';
+  langLabel.textContent = 'RU';
+  const langSub = document.createElement('span');
+  langSub.textContent = 'switch to russian';
+  langItem.appendChild(langLabel);
+  langItem.appendChild(langSub);
+  langItem.addEventListener('click', () => {
+    lang = lang === 'en' ? 'ru' : 'en';
+    applyLang();
+  });
+  fsGrid.appendChild(langItem);
+
+  const kbRowsEn = [
+    ['ESC','1','2','3','4','5','6','7','8','9','0','-','=','BACK'],
+    ['TAB','Q','W','E','R','T','Y','U','I','O','P','[',']','ENTER'],
+    ['CAPS','A','S','D','F','G','H','J','K','L',';',"'"],
+    ['SHIFT','Z','X','C','V','B','N','M',',','.','/'],
+    ['CTRL','FN','SPACE','ALT']
+  ];
+  const kbRowsRu = [
+    ['ESC','1','2','3','4','5','6','7','8','9','0','-','=','BACK'],
+    ['TAB','Й','Ц','У','К','Е','Н','Г','Ш','Щ','З','Х','Ъ','ENTER'],
+    ['CAPS','Ф','Ы','В','А','П','Р','О','Л','Д','Ж','Э'],
+    ['SHIFT','Я','Ч','С','М','И','Т','Ь','Б','Ю','.'],
+    ['CTRL','FN','SPACE','ALT']
+  ];
+  const kbEl = document.getElementById('edexm-kb');
+  const keyMap = {};
+  kbRowsEn.forEach((row, ri) => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'edexm-kb-row';
+    row.forEach((k, ki) => {
+      const keyEl = document.createElement('div');
+      keyEl.className = 'edexm-key';
+      if (k === 'SPACE') keyEl.style.flex = '6';
+      if (k === 'BACK' || k === 'ENTER' || k === 'SHIFT' || k === 'CAPS') keyEl.className += ' wide2';
+      keyEl.textContent = k;
+      keyEl.setAttribute('data-en', k);
+      keyEl.setAttribute('data-ru', kbRowsRu[ri][ki]);
+      keyEl.setAttribute('data-code', k);
+      keyMap[k] = keyEl;
+      rowEl.appendChild(keyEl);
+    });
+    kbEl.appendChild(rowEl);
+  });
+
+  const keyNameMap = {
+    'Escape':'ESC','Backspace':'BACK','Tab':'TAB','Enter':'ENTER','CapsLock':'CAPS',
+    'ShiftLeft':'SHIFT','ShiftRight':'SHIFT','ControlLeft':'CTRL','ControlRight':'CTRL',
+    'AltLeft':'ALT','AltRight':'ALT',' ':'SPACE','Space':'SPACE'
+  };
+
+  const term = document.getElementById('edexm-termbody');
+  const bannerLinesEn = [
+    "Windows PowerShell",
+    "(c) Microsoft Corporation. All rights reserved.",
+    "",
+    "Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows",
+    ""
+  ];
+  const bannerLinesRu = [
+    "Windows PowerShell",
+    "(C) Корпорация Майкрософт (Microsoft Corporation). Все права защищены.",
+    "",
+    "Установите последнюю версию PowerShell для новых функций и улучшения! https://aka.ms/PSWindows",
+    ""
+  ];
+  let currentLine = '';
+  let history = [];
+
+  function renderTerm() {
+    const banner = lang === 'en' ? bannerLinesEn : bannerLinesRu;
+    const promptBase = 'PS C:\\Users\\Guest\\AppData\\Roaming\\eDEX-UI> ';
+    term.innerHTML = banner.concat(history).join('\n') + '\n' + promptBase + currentLine + '<span class="edexm-cursor-blink">&#9608;</span>';
+    term.scrollTop = term.scrollHeight;
+  }
+  renderTerm();
+
+  const fakeResponsesEn = [
+    'Connecting to remote host...',
+    'Access token verified.',
+    'Module loaded successfully.',
+    "'command' is not recognized as an internal or external command.",
+    'Operation completed.'
+  ];
+  const fakeResponsesRu = [
+    'Подключение к удалённому узлу...',
+    'Токен доступа проверен.',
+    'Модуль успешно загружен.',
+    "Команда не распознана как внутренняя или внешняя.",
+    'Операция завершена.'
+  ];
+
+  window.addEventListener('keydown', (e) => {
+    const label = keyNameMap[e.code] || keyNameMap[e.key] || e.key.toUpperCase();
+    const keyEl = keyMap[label] || keyMap[e.key.toUpperCase()];
+    if (keyEl) {
+      keyEl.classList.add('active');
+      setTimeout(() => keyEl.classList.remove('active'), 140);
+    }
+
+    if (e.key === 'Backspace') {
+      currentLine = currentLine.slice(0, -1);
+      e.preventDefault();
+    } else if (e.key === 'Enter') {
+      const promptBase = 'PS C:\\Users\\Guest\\AppData\\Roaming\\eDEX-UI> ';
+      history.push(promptBase + currentLine);
+      if (currentLine.trim().length) {
+        const responses = lang === 'en' ? fakeResponsesEn : fakeResponsesRu;
+        history.push(responses[Math.floor(Math.random()*responses.length)]);
+      }
+      currentLine = '';
+    } else if (e.key.length === 1) {
+      currentLine += e.key;
+    }
+    renderTerm();
+  });
+
+  root.setAttribute('tabindex','0');
+  root.addEventListener('click', () => root.focus());
+
+  applyLang();
+})();
+</script>
